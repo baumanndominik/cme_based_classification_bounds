@@ -16,9 +16,9 @@ Code was developed using Python 3.8.10. The following libraries are required:
 
 To execute the code, run
 
-'''
+```
 python main.py
-'''
+```
 
 By default, the code runs for 10'000 iterations on the OpenAI Gym [1] continuous mountain car environment. At each iteration, a context is sampled and a measurement obtained. The learning agent tries to infer the context from the measurement. If it is too uncertain, it queries an oracle instead and improves its estimates. The overall goal is to learn a policy for the mountain car, which is achieved through a safe learning algorithm [2]. To control the runtime of the algorithm, we terminate policy optimization after 1'000 iterations.
 
