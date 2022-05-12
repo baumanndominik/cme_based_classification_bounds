@@ -7,10 +7,9 @@ This code accompanies the the paper "Frequentist bounds for multi-class classifi
 Code was developed using Python 3.8.10. The following libraries are required:
 
 * numpy (developed with version 1.21.0)
-* GPy (developed with version 1.9.9)
-* safeopt (developed with version 0.16)
-* gym (developed with version 0.17.2)
 * scikit-learn (developed with version 1.0.2)
+* torchvision (developed with version 0.7.0)
+* matplotlib (developed with version 3.3.4)
 
 ## Execution
 
