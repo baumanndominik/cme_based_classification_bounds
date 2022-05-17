@@ -16,28 +16,24 @@ def power_func(meas, lambd, n, k, K, gamma):
         arg = 0.
     return np.sqrt(arg)
 
-def context_conf_int(meas_train, meas_test, cont_train, K, lambd=1e-4, delta=0.05, rkhs_bound=1, gamma=1/((np.exp(7.5))**2), unc=True):
+def context_conf_int(meas_train, meas_test, cont_train, K, lambd=1e-4, delta=0.05, rkhs_bound=1, gamma=1/((np.exp(7.5))**2)):
     k = np.exp(2.6)**2*rbf(meas_test, meas_train, gamma=gamma)
     prob = cont_train@np.linalg.solve(K + len(meas_train)*lambd*np.eye(len(meas_train)), k.T)
     val = np.max(prob)
     prob_cont = np.where(prob == np.amax(prob))[0][0]
-    if unc:
-        cg = 1/4*np.sqrt(np.log(np.linalg.det(K + np.max([1, len(meas_train)*lambd])*np.eye(len(meas_train)))) - 2*np.log(delta))
-        epsilon = power_func(meas_test, lambd, len(meas_train), k, K, gamma=gamma)*(np.sqrt(rkhs_bound) + cg/np.sqrt(len(meas_train)*lambd))
-        ret_unc = 0 
-        if val < 0:
-            ret_unc = val
-        else:
-            ret_unc = np.max([0, (val - epsilon)[0, 0]])
-        return val, epsilon
+    cg = 1/4*np.sqrt(np.log(np.linalg.det(K + np.max([1, len(meas_train)*lambd])*np.eye(len(meas_train)))) - 2*np.log(delta))
+    epsilon = power_func(meas_test, lambd, len(meas_train), k, K, gamma=gamma)*(np.sqrt(rkhs_bound) + cg/np.sqrt(len(meas_train)*lambd))
+    ret_unc = 0 
+    if val < 0:
+        ret_unc = val
     else:
-        return prob
+        ret_unc = np.max([0, (val - epsilon)[0, 0]])
+    return val, epsilon
 
 train_set = datasets.MNIST('./data', train=True, download=True)
 test_set = datasets.MNIST('./data', train=False, download=True)
 
 num_train = 10000
-num_test = 100
 
 train_set_array = train_set.data.numpy()
 x_train = train_set_array.reshape(*train_set_array.shape[:-2], -1)
@@ -46,14 +42,11 @@ x_train = x_train[0:num_train, :]
 test_set_array = test_set.data.numpy()
 x_test = test_set_array.reshape(*test_set_array.shape[:-2], -1)
 x_test = x_test/(0.5*255) - 1
-x_test = x_test[0:num_test, :]
 train_set_array_targets = train_set.targets.numpy()
 y_train = train_set_array_targets.reshape(*train_set_array_targets.shape[:-2], -1)
 y_train = y_train[0:num_train]
 test_set_array_targets = test_set.targets.numpy()
 y_test = test_set_array_targets.reshape(*test_set_array_targets.shape[:-2], -1)
-y_test = y_test[0:num_test]
-
 
 y = np.zeros((10, len(y_train)))
 for i in range(len(y_train)):
