@@ -1,6 +1,6 @@
 # Frequentist bounds for multi-class classification 
 
-This code accompanies the the paper "Frequentist bounds for multi-class classification with applications to safe reinforcement learning."
+This code accompanies the the paper "Safe reinforcement learning in uncertain contexts."
 
 ## Requirements
 
