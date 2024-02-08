@@ -1,6 +1,8 @@
 # Frequentist bounds for multi-class classification 
 
-This code accompanies the the paper "Safe reinforcement learning in uncertain contexts."
+This repository contains an algorithm for multi-class classification that includes frequentist uncertainty intervals. As an example, we here apply the algorithm to the MNIST dataset. A description of the method can be found in:
+
+* Dominik Baumann and Thomas B. Schön, "Safe reinforcement learning in uncertain contexts," IEEE Transactions on Robotics, 2024, [arXiv](https://arxiv.org/abs/2401.05876).
 
 ## Requirements
 
